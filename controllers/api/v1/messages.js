@@ -48,7 +48,7 @@ const create = async (req, res) => {
     let message = req.body.message;
     let m = new Message();
     m.message = message;
-    m.id = 911;  // Set the id manually
+    // m.id = 911;  // Set the id manually
     m.user = "pikachu";
 
     // Check if id is not undefined before saving
