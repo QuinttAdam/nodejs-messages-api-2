@@ -14,6 +14,23 @@ const index = async (req, res) => {
     });
 };
 
+//add getMessageById method
+const getMessageById = async (req, res) => {
+    let id = req.params.id;
+    let messages = await Message.find({id:id});
+    res.json({
+        status: "success",
+        message: "GET all messages with id= ",
+        data: [
+            {
+                messages: messages,
+            },
+        ],
+    });
+};
+
+
+
 const create = async (req, res) => {
     let message = req.body.message;
     let m = new Message();
@@ -102,3 +119,4 @@ module.exports.index = index;
 module.exports.create = create;
 module.exports.remove = remove;
 module.exports.update = update;
+module.exports.getMessageById = getMessageById;
