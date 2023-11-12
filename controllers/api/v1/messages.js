@@ -2,10 +2,37 @@
 const Message = require("../../../models/Message");
 
 const index = async (req, res) => {
-    let messages = await Message.find({});
+    let user = req.query.user;
+    if(user){
+        let messages = await Message.find({user:user});
+
+        res.json({
+            status: "success",
+            message: `GET all messages with user${user}`,
+            data: messages,
+          });
+    } else {
+        let messages = await Message.find({});
+        res.json({
+            status: "success",
+            message: "GET all messages",
+            data: [
+                {
+                    messages: messages,
+                },
+            ],
+        });
+    }
+};
+
+
+//add getMessageById method
+const getMessageById = async (req, res) => {
+    let id = req.params.id;
+    let messages = await Message.find({id:id});
     res.json({
         status: "success",
-        message: "GET all messages",
+        message: "GET all messages with id= "+ id,
         data: [
             {
                 messages: messages,
@@ -14,20 +41,6 @@ const index = async (req, res) => {
     });
 };
 
-//add getMessageById method
-const getMessageById = async (req, res) => {
-    let id = req.params.id;
-    let messages = await Message.find({id:id});
-    res.json({
-        status: "success",
-        message: "GET all messages with id= ",
-        data: [
-            {
-                messages: messages,
-            },
-        ],
-    });
-};
 
 
 
@@ -36,6 +49,7 @@ const create = async (req, res) => {
     let m = new Message();
     m.message = message;
     m.id = 911;  // Set the id manually
+    m.user = "pikachu";
 
     // Check if id is not undefined before saving
     if (m.id !== undefined) {
@@ -48,6 +62,7 @@ const create = async (req, res) => {
                 {
                     id: m.id,
                     message: m.message,
+                    user: m.user,
                 },
             ],
         });
