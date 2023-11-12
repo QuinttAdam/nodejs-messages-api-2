@@ -49,10 +49,6 @@ const create = async (req, res) => {
     let m = new Message();
     m.message = message;
     // m.id = 911;  // Set the id manually
-    m.user = "pikachu";
-
-    // Check if id is not undefined before saving
-    if (m.id !== undefined) {
         await m.save();
 
         res.json({
@@ -60,18 +56,10 @@ const create = async (req, res) => {
             message: "POST a new message",
             data: [
                 {
-                    id: m.id,
                     message: m.message,
-                    user: m.user,
                 },
             ],
         });
-    } else {
-        res.status(400).json({
-            status: "error",
-            message: "Invalid id",
-        });
-    }
 };
 
 const remove = async (req, res) => {
