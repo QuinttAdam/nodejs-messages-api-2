@@ -87,13 +87,11 @@ const remove = async (req, res) => {
 //add put method
 const update = async (req, res) => {
     let id = req.params.id;
-    let messageText = req.body.message; // Use a different variable name to avoid confusion
+    
     try {
         // Find the document by _id, not id
-        const message = await Message.findOneAndUpdate(
-            { id: id }, // Filter criteria
-            { message: messageText }, // Update
-            { new: true } // This option returns the modified document rather than the original
+        const message = await Message.find(
+            { id: id } // Filter criteria
         );
 
         if (message) {
@@ -102,7 +100,6 @@ const update = async (req, res) => {
                 message: "PUT a message",
                 data: {
                     id: message.id,
-                    message: message.message,
                 },
             });
         } else {
