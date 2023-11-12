@@ -45,9 +45,11 @@ const getMessageById = async (req, res) => {
 
 
 const create = async (req, res) => {
-    let message = req.body.message;
+    let message = req.body.message.text;
+    let user = req.body.message.user;
     let m = new Message();
     m.message = message;
+    m.user = user;
     // m.id = 911;  // Set the id manually
         await m.save();
 
@@ -57,6 +59,7 @@ const create = async (req, res) => {
             data: [
                 {
                     message: m.message,
+                    user: m.user,
                 },
             ],
         });
